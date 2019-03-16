@@ -15,10 +15,12 @@ class Fib extends Component {
 
   async fetchValues() {
     const values = await axios.get("/api/values/current");
+    if (!!values.data && values.data[0] === "<") return;
     this.setState({ values: values.data });
   }
   async fetchIndexes() {
     const seenIndexes = await axios.get("/api/values/all");
+    if (seenIndexes.data && seenIndexes.data.includes("<!")) return;
     this.setState({
       seenIndexes: seenIndexes.data
     });
